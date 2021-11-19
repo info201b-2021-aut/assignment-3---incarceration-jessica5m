@@ -1,0 +1,49 @@
+---
+title: "Incarceration Analysis"
+author: "Jessica Mendoza"
+date: "11/21/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
+As you introduce your report and the dataset, you should describe the variables that you've chosen to analyze. In doing so, make clear which measure(s) of incarceration you are focusing on. 
+how these measure of incarceration vary by race. 
+
+## Summary 
+A paragraph of summary information, citing at least 5 values calculated from the data
+
+## Chart 1
+Show more than one, but fewer than ~10 lines: your graph should compare the trend of your measure over time. This may mean showing the same measure for different locations, or different racial groups. Think carefully about a meaningful comparison of locations (e.g., the top 10 counties in a state, top 10 states, etc.)
+You must have clear x and y axis labels,
+The chart needs a clear title 
+You need a legend for your different line colors, and a clear legend title
+In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
+
+#### Summary
+
+## Chart 2
+The second chart that you'll create and include will show how two different (continuous) variables are related to one another. Again, think carefully about what such a comparison means, and want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
+
+You must have clear x and y axis labels,
+The chart needs a clear title 
+If you choose to add a color encoding (not required), you need a legend for your different color and a clear legend title
+In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
+
+#### Summary
+
+## Map
+The last chart that you'll create and include will show how a variable is distributed geographically. Again, think carefully about what such a comparison means, and want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
+
+Your map needs a title
+Your color scale needs a legend with a clear label
+Use a map based coordinate system to set the aspect ratio of your map (see reading)
+Use a minimalist theme for the map (see reading)
+In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
+
+#### Summary 
+
