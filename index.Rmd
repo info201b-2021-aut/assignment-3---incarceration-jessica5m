@@ -14,8 +14,42 @@ An introduction of the problem domain and a description of the variable(s) you a
 As you introduce your report and the dataset, you should describe the variables that you've chosen to analyze. In doing so, make clear which measure(s) of incarceration you are focusing on. 
 how these measure of incarceration vary by race. 
 
+4. By region, within the last year, what was the highest 
+sctterpoot matrix shows color by region jail population within the last year by race
+
 ## Summary 
 A paragraph of summary information, citing at least 5 values calculated from the data
+```{r include=FALSE}
+main_df <- read.csv("https://raw.githubusercontent.com/info201b-2021-aut/assignment-3---incarceration-jessica5m/main/incarceration_trends.csv?token=AV5FGDTEUGNMWUEREF7FRQTBUFQAO")
+
+source("~/Documents/UW/INFO/assignment-3---incarceration-jessica5m/analysis.R")
+
+summary <- list()
+
+#1
+summary$avg_ratio <- avg_ratio
+
+#2
+summary$highest_jail_pop <- highest_jail_pop
+
+#3 
+summary$highest_state_pop <- highest_state_pop
+
+#4
+summary$highest_race_pop <- highest_race_pop
+
+#5
+summary$highest_race <- highest_race
+
+#6
+summary$lowest_race_pop  <- lowest_race_pop
+
+#7
+summary$lowest_race <- lowest_race
+
+```
+
+In the [Incarceration Trends](http://trends.vera.org/incarceration-rates?data=pretrial) data set, there are a total of `r (summary$avg_ratio)`, `r (summary$highest_jail_pop)`, `r (summary$highest_state_pop)`,  `r (summary$highest_race_pop)`, `r (summary$highest_race)`, `r (summary$lowest_race_pop)`, `r (summary$lowest_race)`
 
 ## Chart 1
 Show more than one, but fewer than ~10 lines: your graph should compare the trend of your measure over time. This may mean showing the same measure for different locations, or different racial groups. Think carefully about a meaningful comparison of locations (e.g., the top 10 counties in a state, top 10 states, etc.)
@@ -23,6 +57,14 @@ You must have clear x and y axis labels,
 The chart needs a clear title 
 You need a legend for your different line colors, and a clear legend title
 In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
+
+```{r echo=FALSE}
+ggplot(division_df, aes(x = year, y = division_df$division_sum, colour = division, group = division)) +
+  geom_line() +
+  ggtitle("Change In Jail Population By Division, From 1970-2018") +
+  xlab("Year") +
+  ylab("Jail Population")
+```
 
 #### Summary
 
@@ -34,6 +76,15 @@ The chart needs a clear title
 If you choose to add a color encoding (not required), you need a legend for your different color and a clear legend title
 In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
 
+```{r echo=FALSE}
+ggplot(ratio_race_df, aes(x=total_jail_pop, y=value, colour= variable)) + 
+  geom_point() +
+  scale_colour_manual("Ethnicity", values = c("purple", "orange", "red", "dark green", "navyblue", "pink"), labels = c("Asian American/Pacific Islander", "Latinx American", "African American", "Native American", "Caucasian", "Other")) +
+  ggtitle("Total Incarceration Population vs. Ethnic Population") +
+  xlab("Total Incarceration Population") +
+  ylab("Ethnic Population/Total Incarceration Population Ratio")
+```
+
 #### Summary
 
 ## Map
@@ -44,6 +95,16 @@ Your color scale needs a legend with a clear label
 Use a map based coordinate system to set the aspect ratio of your map (see reading)
 Use a minimalist theme for the map (see reading)
 In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
+
+```{r echo=FALSE}
+ggplot() +
+  geom_polygon( data= map_df, aes(long,lat, group = group, fill = percent_incarcerated), color="white", size = 0.5) +
+  ggtitle("Percentage Of Population That Is Incarcerated") +
+  xlab("") +
+  ylab("") +
+  theme_minimal() +
+  scale_fill_continuous(name="Percentage",low = "lightblue", high = "navyblue")
+```
 
 #### Summary 
 
