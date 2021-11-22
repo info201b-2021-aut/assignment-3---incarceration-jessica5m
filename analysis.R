@@ -135,10 +135,18 @@ incarceration_rate_df$region = tolower(incarceration_rate_df$region)
 map_df <- left_join(states_map, incarceration_rate_df, by = "region")
 ggplot() + 
   geom_polygon( data=states_map, aes(long,lat, group = group), color="black", fill="white" )
+blank_theme <- theme_minimal() +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(), 
+    axis.title = element_blank(), 
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
 ggplot() +
   geom_polygon( data= map_df, aes(long,lat, group = group, fill = percent_incarcerated), color="white", size = 0.5) +
   ggtitle("Percentage Of Population That Is Incarcerated") +
-  xlab("") +
-  ylab("") +
-  theme_minimal() +
-  scale_fill_continuous(name="Percentage",low = "lightblue", high = "navyblue")
+  scale_fill_continuous(name="Percentage",low = "lightblue", high = "navyblue") +
+  blank_theme
