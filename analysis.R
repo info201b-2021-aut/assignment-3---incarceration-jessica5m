@@ -7,19 +7,7 @@ library(maps)
 
 main_df <- read.csv("https://raw.githubusercontent.com/info201b-2021-aut/assignment-3---incarceration-jessica5m/main/incarceration_trends.csv?token=AV5FGDTEUGNMWUEREF7FRQTBUFQAO")
 
-#1. What is the average ratio from female to male across all counties (in the current year)?
-avg_ratio_df <- main_df %>%
-  select(year, female_jail_pop, male_jail_pop) %>%
-  filter(year == max(year))
-
-avg_ratio_df <- avg_ratio_df %>%
-  mutate(avg_ratio_df, ratio = male_jail_pop/female_jail_pop) 
-  
-avg_ratio_df <- avg_ratio_df[is.finite(rowSums(avg_ratio_df)),]
-
-avg_ratio <- mean(avg_ratio_df$ratio, na.rm = TRUE)
-
-#2 & 3. which state has the highest jail pop within recent year and what is it?
+#1 & 2. which state has the highest jail pop within recent year and what is it?
 highest_jail_df <- main_df %>%
   select(state, year, total_jail_pop) %>%
   group_by(state) %>%
@@ -27,6 +15,7 @@ highest_jail_df <- main_df %>%
 highest_jail_df <- highest_jail_df %>%
   group_by(state) %>% 
   summarise(state_sum = sum(total_jail_pop, na.rm = TRUE))
+highest_jail_df$state <- state.name[match(highest_jail_df$state,state.abb)]
 
 highest_jail_pop <- max(highest_jail_df$state_sum)
 
@@ -34,7 +23,7 @@ highest_state_pop <- highest_jail_df %>%
   filter(state_sum == max(state_sum, na.rm = TRUE)) %>%
   pull(state)
 
-# 4-7 which race has the highest and lowest incarceration rate withing the past year?
+# 3-6 which race has the highest and lowest incarceration rate withing the past year?
 race_df <- main_df %>%
   select(year, aapi_jail_pop, latinx_jail_pop, black_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop) %>%
   filter(year == max(year))
@@ -88,13 +77,13 @@ ratio_race_df <- ratio_race_df %>%
 
 ratio_race_df <- ratio_race_df %>%
   group_by(year) %>%
-   summarise(aapi_ratio = aapi_jail_pop/total_jail_pop,
-            latinx_ratio = latinx_jail_pop/total_jail_pop,
-            black_ratio = black_jail_pop/total_jail_pop,
-            native_ratio = native_jail_pop/total_jail_pop,
-            white_ratio = white_jail_pop/total_jail_pop,
-            other_ratio = other_race_jail_pop/total_jail_pop)
-
+   summarise(aapi_ratio = aapi_jail_pop/total_jail_pop *100,
+            latinx_ratio = latinx_jail_pop/total_jail_pop *100,
+            black_ratio = black_jail_pop/total_jail_pop *100,
+            native_ratio = native_jail_pop/total_jail_pop *100,
+            white_ratio = white_jail_pop/total_jail_pop *100,
+            other_ratio = other_race_jail_pop/total_jail_pop*100)
+ratio_race_df <- round(ratio_race_df, digits=2)
 ratio_race_df <- melt(ratio_race_df, id=c("year"))
 
 pop_df <- main_df %>%
@@ -106,10 +95,10 @@ ratio_race_df <- left_join(x = ratio_race_df, y = pop_df, by ="year")
 
 ggplot(ratio_race_df, aes(x=total_jail_pop, y=value, colour= variable)) + 
   geom_point() +
-  scale_colour_manual("Ethnicity", values = c("purple", "orange", "red", "dark green", "navyblue", "pink"), labels = c("Asian American/Pacific Islander", "Latinx American", "African American", "Native American", "Caucasian", "Other")) +
+  scale_colour_manual("Race", values = c("purple", "orange", "red", "dark green", "navyblue", "pink"), labels = c("Asian American/Pacific Islander", "Latin American", "African American", "Native American", "Caucasian", "Other")) +
   ggtitle("Total Incarceration Population vs. Ethnic Population") +
   xlab("Total Incarceration Population") +
-  ylab("Ethnic Population/Total Incarceration Population Ratio")
+  ylab("Percent of Race That Makes Up Jail Population(%)")
 
 #map
 states_map <- map_data("state")

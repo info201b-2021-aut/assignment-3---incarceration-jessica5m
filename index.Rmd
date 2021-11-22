@@ -10,48 +10,40 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
-An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
-As you introduce your report and the dataset, you should describe the variables that you've chosen to analyze. In doing so, make clear which measure(s) of incarceration you are focusing on. 
-how these measure of incarceration vary by race. 
-
+The data set of [Incarceration Trends](http://trends.vera.org/incarceration-rates?data=pretrial) provided by *Vera*, reports incarceration trends in the United States, specifying the location down to the county, from 1970 to 2018. They include data on the population of the county itself and the jail population along with the jail population by race, gender, and age group. I wanted to find if there was any correlation between the location or year and the population of each race along with seeing how much of the population is incarcerated. So I decided to focus on the total jail population and the population of each race by time and location. The total jail population reports the average amount of people incarcerated everyday in a year for a specific prison. The total population provides me with the total amount of people in the county, and using these two variables will allow me to compare how much of the population is incarcerated by each location and how it has changed over time in each region. The data set reports the population of Asian American/ Pacific Islander, Latin American, African American, Native American, Caucasian, and other races within each prison. I can use this data to see the changes in population from each race over time and how it changes with the total jail population. 
 
 ## Summary 
-A paragraph of summary information, citing at least 5 values calculated from the data
 ```{r include=FALSE}
 main_df <- read.csv("https://raw.githubusercontent.com/info201b-2021-aut/assignment-3---incarceration-jessica5m/main/incarceration_trends.csv?token=AV5FGDTEUGNMWUEREF7FRQTBUFQAO")
 
-source("https://raw.githubusercontent.com/info201b-2021-aut/assignment-3---incarceration-jessica5m/main/analysis.R?token=AV5FGDVTLHVKBDQGSHIKCATBURMVY")
+source("https://raw.githubusercontent.com/info201b-2021-aut/assignment-3---incarceration-jessica5m/main/analysis.R?token=AV5FGDXYPPS6R2WNHODSUTDBURNCI")
 
 summary <- list()
 
 #1
-summary$avg_ratio <- avg_ratio
-
-#2
 summary$highest_jail_pop <- highest_jail_pop
 
-#3 
+#2 
 summary$highest_state_pop <- highest_state_pop
 
-#4
+#3
 summary$highest_race_pop <- highest_race_pop
 
-#5
+#4
 summary$highest_race <- highest_race
 
-#6
+#5
 summary$lowest_race_pop  <- lowest_race_pop
 
-#7
+#6
 summary$lowest_race <- lowest_race
 
 ```
 
-In the [Incarceration Trends](http://trends.vera.org/incarceration-rates?data=pretrial) data set, there are a total of `r (summary$avg_ratio)`, `r (summary$highest_jail_pop)`, `r (summary$highest_state_pop)`,  `r (summary$highest_race_pop)`, `r (summary$highest_race)`, `r (summary$lowest_race_pop)`, `r (summary$lowest_race)`
+From the data set, the highest jail population, among the states, reported was **`r (summary$highest_jail_pop)`** in **`r (summary$highest_state_pop)`**. The ethnic group with the highest population was **`r (summary$highest_race)`**, coming in at **`r (summary$highest_race_pop)`**. As for the the ethnic group with the lowest population rate, **`r (summary$lowest_race)`** had a reported population of only **`r (summary$lowest_race_pop)`**.
 
 ## Chart 1
 In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
 ```{r echo=FALSE}
 ggplot(division_df, aes(x = year, y = division_df$division_sum, colour = division, group = division)) +
   geom_line() +
@@ -68,10 +60,10 @@ In your .Rmd file, make sure to describe why you included the chart, and what pa
 ```{r echo=FALSE}
 ggplot(ratio_race_df, aes(x=total_jail_pop, y=value, colour= variable)) + 
   geom_point() +
-  scale_colour_manual("Ethnicity", values = c("purple", "orange", "red", "dark green", "navyblue", "pink"), labels = c("Asian American/Pacific Islander", "Latinx American", "African American", "Native American", "Caucasian", "Other")) +
+  scale_colour_manual("Race", values = c("purple", "orange", "red", "dark green", "navyblue", "pink"), labels = c("Asian American/Pacific Islander", "Latin American", "African American", "Native American", "Caucasian", "Other")) +
   ggtitle("Total Incarceration Population vs. Ethnic Population") +
   xlab("Total Incarceration Population") +
-  ylab("Ethnic Population/Total Incarceration Population Ratio")
+  ylab("Percent of Race That Makes Up Jail Population(%)")
 ```
 
 #### Summary
