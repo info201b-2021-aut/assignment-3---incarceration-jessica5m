@@ -43,7 +43,6 @@ summary$lowest_race <- lowest_race
 From the data set, the highest jail population, among the states, reported was **`r (summary$highest_jail_pop)`** in **`r (summary$highest_state_pop)`**. The ethnic group with the highest population was **`r (summary$highest_race)`**, coming in at **`r (summary$highest_race_pop)`**. As for the the ethnic group with the lowest population rate, **`r (summary$lowest_race)`** had a reported population of only **`r (summary$lowest_race_pop)`**.
 
 ## Chart 1
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
 ```{r echo=FALSE}
 ggplot(division_df, aes(x = year, y = division_df$division_sum, colour = division, group = division)) +
   geom_line() +
@@ -53,10 +52,9 @@ ggplot(division_df, aes(x = year, y = division_df$division_sum, colour = divisio
 ```
 
 #### Summary
+This line graph was intended to show the relationship between the total jail population over time, from 1970-2018, within each division of the US. The South Atlantic shows to have greatest total jail population over the course of the 48 years of reported data, hitting close to 200,000 people. Whereas the Mountains show to have the least total jail population, barely hitting 25,000 people. One can also note since 2005 most of the division total jail population seem to stay around the same amount. Although, the South Atlantic seems to be the only division that has dramatically changed within a short amount of time in comparison to the other divisions.
 
 ## Chart 2
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
 ```{r echo=FALSE}
 ggplot(ratio_race_df, aes(x=total_jail_pop, y=value, colour= variable)) + 
   geom_point() +
@@ -67,15 +65,9 @@ ggplot(ratio_race_df, aes(x=total_jail_pop, y=value, colour= variable)) +
 ```
 
 #### Summary
+This scatter plot was intended to show the relationship between the percentage each ethnic group makes up in the total jail population and the total jail population. Caucasians and African Americans have made up an average 40% of the prison's population, although fluctuating quite more often as the total jail population increased in comparison to the other ethnic groups. Whereas Asian Americans/Pacific Islanders and Native Americans have made up less than 3% of the prison's population, even as the total jail population increased it has remained stable. The percentage of Latin Americans, 15%, has not changed by much in correlation to the total jail population. 
 
 ## Map
-
-Your map needs a title
-Your color scale needs a legend with a clear label
-Use a map based coordinate system to set the aspect ratio of your map (see reading)
-Use a minimalist theme for the map (see reading)
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
 ```{r echo=FALSE}
 ggplot() +
   geom_polygon( data= map_df, aes(long,lat, group = group, fill = percent_incarcerated), color="white", size = 0.5) +
@@ -85,4 +77,4 @@ ggplot() +
 ```
 
 #### Summary 
-
+This map was intended to show the relationship between the total population of each state and the total jail population, this is shown through the percentage of the population that is in jail. Louisiana is shown to have the highest percentage of their population to be in jail at .6% with Kentucky coming in second with a little over .5%. Vermont, Rhode Island, Connection, and Delaware show to have the lowest percentage of their population in jail. 
